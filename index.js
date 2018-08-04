@@ -703,6 +703,12 @@ function makeThing(log, config) {
             config.topics.setCurrentTemperature, config.topics.getCurrentTemperature, 0 );
     }
 
+    // Characteristic.CurrentTemperature
+    function characteristic_TargetTemperature(service) {
+        floatCharacteristic(service, 'targetTemperature', Characteristic.CurrentTemperature,
+            config.topics.setTargetTemperature, null, 0 );
+    }
+
     // Characteristic.CurrentRelativeHumidity
     function characteristic_CurrentRelativeHumidity(service) {
         floatCharacteristic(service, 'currentRelativeHumidity', Characteristic.CurrentRelativeHumidity,
@@ -864,6 +870,7 @@ function makeThing(log, config) {
         } else if (config.type == "thermostat") {
             service = new Service.Thermostat(name);
             characteristic_CurrentTemperature(service);
+            characteristic_TargetTemperature(service);
             addSensorOptionalProps = true;
         } else if (config.type == "humiditySensor") {
             service = new Service.HumiditySensor(name);
