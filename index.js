@@ -861,6 +861,10 @@ function makeThing(log, config) {
             service = new Service.TemperatureSensor(name);
             characteristic_CurrentTemperature(service);
             addSensorOptionalProps = true;
+        } else if (config.type == "thermostat") {
+            service = new Service.Thermostat(name);
+            characteristic_CurrentTemperature(service);
+            addSensorOptionalProps = true;
         } else if (config.type == "humiditySensor") {
             service = new Service.HumiditySensor(name);
             characteristic_CurrentRelativeHumidity(service);
