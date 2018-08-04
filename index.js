@@ -700,12 +700,12 @@ function makeThing(log, config) {
     // Characteristic.CurrentTemperature
     function characteristic_CurrentTemperature(service) {
         floatCharacteristic(service, 'currentTemperature', Characteristic.CurrentTemperature,
-            config.topics.setCurrentTemperature, config.topics.getCurrentTemperature, 0 );
+            null, config.topics.getCurrentTemperature, 0 );
     }
 
     // Characteristic.CurrentTemperature
     function characteristic_TargetTemperature(service) {
-        floatCharacteristic(service, 'targetTemperature', Characteristic.CurrentTemperature,
+        floatCharacteristic(service, 'targetTemperature', Characteristic.TargetTemperature,
             config.topics.setTargetTemperature, null, 0 );
     }
 
