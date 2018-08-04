@@ -706,7 +706,7 @@ function makeThing(log, config) {
     // Characteristic.CurrentTemperature
     function characteristic_TargetTemperature(service) {
         floatCharacteristic(service, 'targetTemperature', Characteristic.TargetTemperature,
-            config.topics.setTargetTemperature, null, 0 );
+            config.topics.setTargetTemperature, config.topics.getTargetTemperature, 0 );
     }
 
     // Characteristic.CurrentRelativeHumidity
@@ -804,6 +804,24 @@ function makeThing(log, config) {
         multiCharacteristic( service, 'locktar', Characteristic.LockTargetState, config.topics.setLockTargetState, config.topics.getLockTargetState, values, Characteristic.LockTargetState.UNSECURED );
     }
 
+    // Characteristic.CurrentHeatingCoolingState
+    function characteristic_CurrentHeatingCoolingState(service) {
+        let values = config.lockValues;
+        if( ! values ) {
+            values = [ 0,1,2,3 ];
+        }
+        multiCharacteristic( service, 'currentHeatingCoolingState', Characteristic.CurrentHeatingCoolingState, null, config.topics.getCurrentHeatingCoolingState, values, Characteristic.CurrentHeatingCoolingState.OFF );
+    }
+
+    // Characteristic.CurrentHeatingCoolingState
+    function characteristic_TargetHeatingCoolingState(service) {
+        let values = config.lockValues;
+        if( ! values ) {
+            values = [ 0,1,2,3 ];
+        }
+        multiCharacteristic( service, 'targetHeatingCoolingState', Characteristic.TargetHeatingCoolingState, config.topics.setTargetHeatingCoolingState, null, values, Characteristic.CurrentHeatingCoolingState.OFF );
+    }
+
     // Characteristic.RotationDirection
     function characteristic_RotationDirection(service) {
         integerCharacteristic(service, 'rotationDirection', Characteristic.RotationDirection, config.topics.setRotationDirection, config.topics.getRotationDirection);
@@ -871,6 +889,8 @@ function makeThing(log, config) {
             service = new Service.Thermostat(name);
             characteristic_CurrentTemperature(service);
             characteristic_TargetTemperature(service);
+            characteristic_CurrentHeatingCoolingState(service);
+            characteristic_TargetHeatingCoolingState(service);
             addSensorOptionalProps = true;
         } else if (config.type == "humiditySensor") {
             service = new Service.HumiditySensor(name);
